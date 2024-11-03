@@ -4,13 +4,12 @@ import fetch from "node-fetch";
 dotenv.config({ path: "../.env" });
 
 const app = express();
-const port = 3001;
+const port = 5001;
 
 // Allow express to parse JSON bodies
 app.use(express.json());
 
 app.post("/api/token", async (req, res) => {
-  
   // Exchange the code for an access_token
   const response = await fetch(`https://discord.com/api/oauth2/token`, {
     method: "POST",
@@ -29,7 +28,7 @@ app.post("/api/token", async (req, res) => {
   const { access_token } = await response.json();
 
   // Return the access_token to our client as { access_token: "..."}
-  res.send({access_token});
+  res.send({ access_token });
 });
 
 app.listen(port, () => {
