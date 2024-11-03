@@ -1,11 +1,23 @@
-import { setupDiscordSdk, getAuth } from "./discord";
+import { setupDiscordSdk, getAuth, getDiscordSdk } from "./discord";
+import { fetchGuildAvatar, setupAvatarImg } from "./discord-avatar";
+import { getVoiceChannelName } from "./discord-voice";
 import "./style.css";
 import rocketLogo from "/rocket.png";
 
-setupDiscordSdk().then(() => {
+setupDiscordSdk().then(async () => {
   console.log("Discord SDK is ready");
 
-  document.querySelector("#app").innerHTML = `
+  const guildAvatar = await fetchGuildAvatar(getAuth(), getDiscordSdk());
+
+  const guildImg = guildAvatar ? document.createElement("img") : null;
+
+  // 3. Append to the UI an img tag with the related information
+  if (guildAvatar && guildImg) {
+    setupAvatarImg(guildImg, guildAvatar);
+  }
+
+  const app = document.querySelector("#app");
+  app.innerHTML = `
 <div>
   <img src="${rocketLogo}" class="logo" alt="Discord" />
   <h1>Hello, World! :)</h1>
@@ -16,7 +28,10 @@ setupDiscordSdk().then(() => {
   <p>With Application: ${getAuth()?.application.name}#${
     getAuth()?.application.id
   }</p>
+  <p>Activity Channel:"${await getVoiceChannelName(getDiscordSdk())}"</p>
 </div>`;
+
+  guildImg && app.appendChild(guildImg);
 });
 
 document.querySelector("#app").innerHTML = `

@@ -49,3 +49,5 @@ export async function setupDiscordSdk() {
  * Get Auth instance
  */
 export const getAuth = () => auth;
+
+export const getDiscordSdk = () => discordSdk;
