@@ -4,7 +4,7 @@ import { getVoiceChannelName } from "./discord-voice";
 import "./style.css";
 import rocketLogo from "/rocket.png";
 
-setupDiscordSdk().then(async () => {
+setupDiscordSdk().then(async (thing) => {
   console.log("Discord SDK is ready");
 
   const guildAvatar = await fetchGuildAvatar(getAuth(), getDiscordSdk());
@@ -29,6 +29,7 @@ setupDiscordSdk().then(async () => {
     getAuth()?.application.id
   }</p>
   <p>Activity Channel:"${await getVoiceChannelName(getDiscordSdk())}"</p>
+  <textArea id="ta">${JSON.stringify(thing, null, 2)}</textArea>
 </div>`;
 
   guildImg && app.appendChild(guildImg);

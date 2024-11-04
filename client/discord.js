@@ -1,4 +1,5 @@
 import { DiscordSDK } from "@discord/embedded-app-sdk";
+import { createPromise } from "./mini";
 
 const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
 // Will eventually store the authenticated user's access_token
@@ -9,7 +10,9 @@ const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
 let auth = null;
 
 export async function setupDiscordSdk() {
-  await discordSdk.ready();
+  const [readyPromise, resolve] = createPromise();
+  discordSdk.subscribe("READY", resolve);
+  const [readyObject] = await Promise.all([readyPromise, discordSdk.ready()]);
 
   // Authorize with Discord Client
   const { code } = await discordSdk.commands.authorize({
@@ -43,6 +46,8 @@ export async function setupDiscordSdk() {
   if (auth === null) {
     throw new Error("Authenticate command failed");
   }
+
+  return readyObject;
 }
 
 /**
