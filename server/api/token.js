@@ -4,10 +4,14 @@ import fetch from "node-fetch";
 dotenv.config({ path: "../.env" });
 
 const app = express();
-const port = 5001;
 
 // Allow express to parse JSON bodies
 app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} /api/token`);
+  next();
+});
 
 app.post("/api/token", async (req, res) => {
   // Exchange the code for an access_token
@@ -24,6 +28,15 @@ app.post("/api/token", async (req, res) => {
     }),
   });
 
+  console.log(
+    `${new Date().toISOString()} /api/token response: ${response.status}`
+  );
+
+  if (response.ok === false) {
+    res.status(500).send("Failed to exchange code for access_token");
+    return;
+  }
+
   // Retrieve the access_token from the response
   const { access_token } = await response.json();
 
@@ -31,6 +44,4 @@ app.post("/api/token", async (req, res) => {
   res.send({ access_token });
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+export default app;
