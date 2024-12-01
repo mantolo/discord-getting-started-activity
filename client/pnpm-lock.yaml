@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@discord/embedded-app-sdk':
-        specifier: ^1.6.1
-        version: 1.6.1
+        specifier: latest
+        version: 1.7.0
     devDependencies:
       vite:
         specifier: ^5.0.8
@@ -18,8 +18,8 @@ importers:
 
 packages:
 
-  '@discord/embedded-app-sdk@1.6.1':
-    resolution: {integrity: sha512-rIPcr4o4vtzly2pvc08nx/sW6Su21WWJ4A4PLjMsMkJ0h4aofCyNjfPVWg0EecS4L7Fz6Ao35YZrpSGWaKYotA==}
+  '@discord/embedded-app-sdk@1.7.0':
+    resolution: {integrity: sha512-lHoDTtNzJlrajlmXhbjQukl07GwUKH91CqVqr8lEYyOPu8uiAZJZ3E7yx6EX53kert2z8w7ksYVnE9TZzbvb2Q==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -345,7 +345,7 @@ packages:
 
 snapshots:
 
-  '@discord/embedded-app-sdk@1.6.1':
+  '@discord/embedded-app-sdk@1.7.0':
     dependencies:
       '@types/lodash.transform': 4.6.9
       '@types/uuid': 10.0.0
